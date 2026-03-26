@@ -313,6 +313,9 @@ function goToScreen(id) {
     btn.addEventListener('mouseenter', () => gsap.to(btn,{scale:1.1,duration:0.3}));
     btn.addEventListener('mouseleave', () => gsap.to(btn,{scale:1,duration:0.3}));
     btn.addEventListener('click', () => {
+        // Arrancar música directamente en este click
+        const music = document.getElementById('bgMusic');
+        if (music) { music.volume = 0.6; music.play().catch(()=>{}); }
         gsap.to('#screen1', { opacity:0, duration:0.8, onComplete:() => {
             document.getElementById('screen1').style.opacity = '';
             goToScreen('screen2');
@@ -406,29 +409,6 @@ function initScreen2() {
 
     <!-- BACKGROUND MUSIC -->
     <audio id="bgMusic" src="dorthea-ts.mp3" loop preload="auto"></audio>
-
-    <script>
-    (function() {
-        const music = document.getElementById("bgMusic");
-        music.volume = 0.6;
-
-        // Intentar apenas carga la página
-        window.addEventListener('load', function() {
-            music.play().catch(function() {
-                // Si falla, esperar primera interacción
-                function startOnInteraction() {
-                    music.play().catch(function(){});
-                    document.removeEventListener('click', startOnInteraction);
-                    document.removeEventListener('touchstart', startOnInteraction);
-                    document.removeEventListener('keydown', startOnInteraction);
-                }
-                document.addEventListener('click', startOnInteraction);
-                document.addEventListener('touchstart', startOnInteraction);
-                document.addEventListener('keydown', startOnInteraction);
-            });
-        });
-    })();
-    <\/script>
 
 </body>
 </html>
