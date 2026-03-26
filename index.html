@@ -404,22 +404,29 @@ function initScreen2() {
 }
 </script>
 
-    <!-- ===== BACKGROUND MUSIC ===== -->
+    <!-- BACKGROUND MUSIC -->
     <audio id="bgMusic" src="dorthea-ts.mp3" loop preload="auto"></audio>
 
     <script>
     (function() {
         const music = document.getElementById("bgMusic");
-        music.volume = 0.5;
-        function startMusic() {
-            music.play().catch(()=>{});
-            document.removeEventListener("click", startMusic);
-            document.removeEventListener("keydown", startMusic);
-            document.removeEventListener("touchstart", startMusic);
-        }
-        document.addEventListener("click", startMusic);
-        document.addEventListener("keydown", startMusic);
-        document.addEventListener("touchstart", startMusic);
+        music.volume = 0.6;
+
+        // Intentar apenas carga la página
+        window.addEventListener('load', function() {
+            music.play().catch(function() {
+                // Si falla, esperar primera interacción
+                function startOnInteraction() {
+                    music.play().catch(function(){});
+                    document.removeEventListener('click', startOnInteraction);
+                    document.removeEventListener('touchstart', startOnInteraction);
+                    document.removeEventListener('keydown', startOnInteraction);
+                }
+                document.addEventListener('click', startOnInteraction);
+                document.addEventListener('touchstart', startOnInteraction);
+                document.addEventListener('keydown', startOnInteraction);
+            });
+        });
     })();
     <\/script>
 
