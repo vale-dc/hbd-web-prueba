@@ -315,7 +315,7 @@ function goToScreen(id) {
     btn.addEventListener('click', () => {
         // Arrancar música directamente en este click
         const music = document.getElementById('bgMusic');
-        if (music) { music.volume = 0.15; music.play().catch(()=>{}); }
+        if (music) { music.volume = 0.08; music.play().catch(()=>{}); }
         gsap.to('#screen1', { opacity:0, duration:0.8, onComplete:() => {
             document.getElementById('screen1').style.opacity = '';
             goToScreen('screen2');
